@@ -187,8 +187,8 @@ def parse_opening_hours(texts: dict[str, str]) -> str | None:
 def _add_hours(oh: OpeningHours, days: list[str], value: str) -> None:
     # Ignore any trailing note: "（4月1日より…）" or "※一時閉店あり".
     value = re.split(r"[（※]", value, maxsplit=1)[0]
-    # Normalise separators and whitespace: "6:20～10:00, 16:00-21:00", "6:50 ～22:00".
-    value = re.sub(r"[〜～]", "-", value)
+    # Normalise separators and whitespace: "6:20～10:00, 16:00-21:00", "6:50 ～22:00", "7:00~20:00".
+    value = re.sub(r"[〜～~]", "-", value)
     value = re.sub(r"\s", "", value)
     for range_str in value.split(","):
         if m := re.fullmatch(r"(\d{1,2}:\d{2})-(\d{1,2}:\d{2})", range_str):
